@@ -1,29 +1,52 @@
 local slots = {}
 local towers = {}
+local enemies = {}
+local enemySpawnTimer = 0
 
 function love.load()
     love.graphics.setBackgroundColor(0.15, 0.18, 0.15)
 
     slots = {
         {x = 220, y = 180, size = 40, occupied = false},
-        {x = 420, y = 260, size = 40, occupied = false},
+        {x = 420, y = 320, size = 40, occupied = false},
         {x = 620, y = 180, size = 40, occupied = false}
     }
 end
 
+function spawnEnemy()
+    table.insert(enemies, {
+        x = -30,
+        y = 270,
+        radius = 15,
+        speed = 80
+    })
+end
+
 function love.update(dt)
+    enemySpawnTimer = enemySpawnTimer + dt
+
+    if enemySpawnTimer >= 2 then
+        spawnEnemy()
+        enemySpawnTimer = 0
+    end
+
+    for i = #enemies, 1, -1 do
+        local enemy = enemies[i]
+        enemy.x = enemy.x + enemy.speed * dt
+
+        if enemy.x > 990 then
+            table.remove(enemies, i)
+        end
+    end
 end
 
 function love.draw()
-    -- Títol
     love.graphics.setColor(1, 1, 1)
     love.graphics.print("Forest Guardians - Prototip Fase 3", 20, 20)
 
-    -- Camí
     love.graphics.setColor(0.55, 0.45, 0.3)
     love.graphics.rectangle("fill", 0, 230, 960, 80)
 
-    -- Slots de construcció
     for _, slot in ipairs(slots) do
         if slot.occupied then
             love.graphics.setColor(0.2, 0.7, 0.2)
@@ -33,10 +56,14 @@ function love.draw()
         love.graphics.rectangle("fill", slot.x, slot.y, slot.size, slot.size)
     end
 
-    -- Torres
     for _, tower in ipairs(towers) do
         love.graphics.setColor(0.2, 0.4, 0.9)
         love.graphics.circle("fill", tower.x, tower.y, 18)
+    end
+
+    for _, enemy in ipairs(enemies) do
+        love.graphics.setColor(0.8, 0.2, 0.2)
+        love.graphics.circle("fill", enemy.x, enemy.y, enemy.radius)
     end
 end
 

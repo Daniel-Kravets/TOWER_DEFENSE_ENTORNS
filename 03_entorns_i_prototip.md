@@ -13,3 +13,9 @@ Per començar el prototip s’ha decidit implementar primer una base funcional m
 També s’ha decidit treballar amb formes simples i lògica bàsica abans d’afegir recursos visuals més elaborats. Això permet validar la jugabilitat principal del tower defense sense dependre d’elements gràfics finals.
 
 La primera versió del prototip se centrarà en tres elements bàsics: un camí simple, almenys un enemic en moviment i la possibilitat de construir una defensa en un punt determinat del mapa.
+
+# 3. Primeres interaccions implementades
+
+En aquesta part del prototip s’ha incorporat una primera interacció funcional amb l’usuari. El joc mostra un camí simple i diversos punts de construcció repartits pel mapa. Quan l’usuari fa clic sobre un punt disponible, es construeix una defensa bàsica en aquella posició.
+
+Aquesta implementació permet validar que el joc ja no només arrenca, sinó que també admet una acció directa del jugador dins del bucle de joc. Encara es tracta d’una versió molt inicial, però ja representa una base funcional coherent amb el model previst.
