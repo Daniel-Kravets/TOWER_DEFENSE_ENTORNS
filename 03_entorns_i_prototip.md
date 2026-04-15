@@ -19,3 +19,9 @@ La primera versió del prototip se centrarà en tres elements bàsics: un camí 
 En aquesta part del prototip s’ha incorporat una primera interacció funcional amb l’usuari. El joc mostra un camí simple i diversos punts de construcció repartits pel mapa. Quan l’usuari fa clic sobre un punt disponible, es construeix una defensa bàsica en aquella posició.
 
 Aquesta implementació permet validar que el joc ja no només arrenca, sinó que també admet una acció directa del jugador dins del bucle de joc. Encara es tracta d’una versió molt inicial, però ja representa una base funcional coherent amb el model previst.
+
+# 4. Bucle de joc funcional
+
+En aquesta fase també s’ha incorporat un sistema inicial d’enemics que apareixen automàticament i es desplacen pel camí principal. Això permet que el prototip disposi ja d’un bucle de joc bàsic i identificable: el jugador pot col·locar defenses mentre els enemics avancen de forma contínua.
+
+Aquest pas és important perquè valida que el projecte no només té una escena inicial, sinó una dinàmica mínima de joc amb moviment, interacció i actualització constant de l’estat del sistema.

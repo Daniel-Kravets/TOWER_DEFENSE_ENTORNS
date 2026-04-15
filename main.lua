@@ -18,8 +18,15 @@ function spawnEnemy()
         x = -30,
         y = 270,
         radius = 15,
-        speed = 80
+        speed = 80,
+        health = 3
     })
+end
+
+function distance(x1, y1, x2, y2)
+    local dx = x2 - x1
+    local dy = y2 - y1
+    return math.sqrt(dx * dx + dy * dy)
 end
 
 function love.update(dt)
@@ -36,6 +43,26 @@ function love.update(dt)
 
         if enemy.x > 990 then
             table.remove(enemies, i)
+        end
+    end
+
+    for _, tower in ipairs(towers) do
+        tower.cooldown = tower.cooldown - dt
+
+        if tower.cooldown <= 0 then
+            for i = #enemies, 1, -1 do
+                local enemy = enemies[i]
+                local d = distance(tower.x, tower.y, enemy.x, enemy.y)
+
+                if d <= tower.range then
+                    enemy.health = enemy.health - tower.damage
+                    tower.cooldown = tower.attackSpeed
+                    if enemy.health <= 0 then
+                        table.remove(enemies, i)
+                    end
+                    break
+                end
+            end
         end
     end
 end
@@ -59,11 +86,17 @@ function love.draw()
     for _, tower in ipairs(towers) do
         love.graphics.setColor(0.2, 0.4, 0.9)
         love.graphics.circle("fill", tower.x, tower.y, 18)
+
+        love.graphics.setColor(0.4, 0.6, 1, 0.15)
+        love.graphics.circle("line", tower.x, tower.y, tower.range)
     end
 
     for _, enemy in ipairs(enemies) do
         love.graphics.setColor(0.8, 0.2, 0.2)
         love.graphics.circle("fill", enemy.x, enemy.y, enemy.radius)
+
+        love.graphics.setColor(0, 0, 0)
+        love.graphics.print(tostring(enemy.health), enemy.x - 4, enemy.y - 6)
     end
 end
 
@@ -77,7 +110,11 @@ function love.mousepressed(x, y, button)
                 slot.occupied = true
                 table.insert(towers, {
                     x = slot.x + slot.size / 2,
-                    y = slot.y + slot.size / 2
+                    y = slot.y + slot.size / 2,
+                    range = 140,
+                    damage = 1,
+                    attackSpeed = 0.8,
+                    cooldown = 0
                 })
                 break
             end
