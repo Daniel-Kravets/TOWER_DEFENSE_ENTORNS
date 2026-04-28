@@ -21,6 +21,7 @@ function spawnEnemy()
         speed = 80,
         health = 3
     })
+    print("Enemigo generado")
 end
 
 function distance(x1, y1, x2, y2)
@@ -42,6 +43,7 @@ function love.update(dt)
         enemy.x = enemy.x + enemy.speed * dt
 
         if enemy.x > 990 then
+            print("Enemigo salido del mapa")
             table.remove(enemies, i)
         end
     end
@@ -56,8 +58,12 @@ function love.update(dt)
 
                 if d <= tower.range then
                     enemy.health = enemy.health - tower.damage
+                    print("Enemigo atacado. Vida restante:", enemy.health)
+
                     tower.cooldown = tower.attackSpeed
+
                     if enemy.health <= 0 then
+                        print("Enemigo eliminado")
                         table.remove(enemies, i)
                     end
                     break
@@ -116,6 +122,8 @@ function love.mousepressed(x, y, button)
                     attackSpeed = 0.8,
                     cooldown = 0
                 })
+
+                print("Torre construida en:", slot.x, slot.y)
                 break
             end
         end
